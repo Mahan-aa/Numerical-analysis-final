@@ -6,7 +6,11 @@ Final project for the Numerical Analysis course.
 
 This project numerically computes the points guaranteed by the Mean Value Theorem for Integrals and the Mean Value Theorem for Derivatives using MATLAB.
 
-Given a function `F(x)` defined on an interval `[a,b]`, the program determines:
+Given 
+```math
+F(x)=\int_{0}^{\tan(x)} e^{-(t-1)^2}\,dt
+```
+defined on an interval `[0,0.5]`, the program determines:
 
 ### Mean Value Theorem for Integrals
 
