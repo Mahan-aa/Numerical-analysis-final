@@ -1,149 +1,111 @@
-# Numerical Verification of the Mean Value Theorems Using MATLAB
+# Numerical Verification of Mean Value Theorems
 
-## Overview
+Final project for the Numerical Analysis course.
 
-This project presents a numerical investigation of two fundamental results from calculus:
+## Description
 
-1. **Mean Value Theorem for Integrals**
-2. **Mean Value Theorem for Derivatives**
+This project numerically computes the points guaranteed by the Mean Value Theorem for Integrals and the Mean Value Theorem for Derivatives using MATLAB.
 
-Given a continuous function (F(x)) on an interval ([a,b]), the goal is to determine numerically the points guaranteed by these theorems using only numerical techniques.
+Given a function `F(x)` defined on an interval `[a,b]`, the program determines:
 
-The project was developed in **MATLAB** as a final project for the Numerical Analysis course.
+### Mean Value Theorem for Integrals
 
----
+Find `c ∈ [a,b]` such that
 
-## Problem Statement
+```math
+F(c)=\frac{1}{b-a}\int_a^b F(t)\,dt
+```
 
-For a given function (F(x)), determine numerically:
+### Mean Value Theorem for Derivatives
 
-### Integral Mean Value Theorem
+Find `c ∈ (a,b)` such that
 
-Find (c \in [a,b]) such that
+```math
+F'(c)=\frac{F(b)-F(a)}{b-a}
+```
 
-[
-F(c)=\frac{1}{b-a}\int_a^b F(t),dt.
-]
-
-### Derivative Mean Value Theorem
-
-Find (c \in (a,b)) such that
-
-[
-F'(c)=\frac{F(b)-F(a)}{b-a}.
-]
-
-Only numerical methods are allowed. Symbolic differentiation, symbolic integration, and exact analytical solutions are not used.
+Only numerical methods are used. Symbolic differentiation and symbolic integration are not employed.
 
 ---
 
-## Numerical Techniques Employed
+## Numerical Methods Used
 
 ### Numerical Integration
 
-The average value of the function is computed through numerical approximation of
+Computes the average value
 
-[
-\int_a^b F(t),dt.
-]
+```math
+\frac{1}{b-a}\int_a^b F(t)\,dt
+```
+
+using MATLAB numerical integration routines.
 
 ### Root Finding
 
-To locate the point satisfying the Integral Mean Value Theorem, the equation
-
-[
-F(x)-\frac{1}{b-a}\int_a^b F(t),dt = 0
-]
-
-is solved numerically.
+Determines the required value(s) of `c` by solving nonlinear equations numerically.
 
 ### Numerical Differentiation
 
-The derivative (F'(x)) is approximated using finite-difference formulas.
+Approximates derivative values using finite-difference formulas.
 
 ### Interpolation
 
-Derivative values obtained at discrete nodes are interpolated to construct a continuous approximation of (F'(x)).
-
-### Nonlinear Equation Solving
-
-The point satisfying the Mean Value Theorem for Derivatives is obtained by solving
-
-[
-F'(x)-\frac{F(b)-F(a)}{b-a}=0.
-]
+Constructs a continuous approximation of the derivative from discrete derivative samples.
 
 ---
 
-## Methodology
+## Algorithm
 
-### Part I: Integral Mean Value Theorem
+### Integral Mean Value Point
 
-1. Define the function (F(x)).
-2. Compute the integral numerically on ([a,b]).
-3. Evaluate the average value
+1. Compute the average value of the function on `[a,b]`.
+2. Define
 
-[
-A=\frac{1}{b-a}\int_a^b F(t),dt.
-]
+```math
+G(x)=F(x)-\frac{1}{b-a}\int_a^bF(t)\,dt
+```
 
-4. Define
+3. Find a root of `G(x)`.
 
-[
-G(x)=F(x)-A.
-]
-
-5. Apply a root-finding algorithm to determine (c).
-
----
-
-### Part II: Derivative Mean Value Theorem
+### Derivative Mean Value Point
 
 1. Compute the secant slope
 
-[
-m=\frac{F(b)-F(a)}{b-a}.
-]
+```math
+m=\frac{F(b)-F(a)}{b-a}
+```
 
-2. Approximate derivative values numerically.
-3. Interpolate the derivative data.
-4. Construct
+2. Approximate `F'(x)` numerically.
+3. Interpolate the derivative values.
+4. Define
 
-[
-H(x)=F'(x)-m.
-]
+```math
+H(x)=F'(x)-m
+```
 
-5. Apply a root-finding algorithm to obtain (c).
+5. Find a root of `H(x)`.
 
 ---
 
-## MATLAB Implementation
-
-The implementation combines several topics from numerical analysis:
+## Topics
 
 * Numerical Integration
 * Numerical Differentiation
-* Polynomial/Spline Interpolation
-* Nonlinear Equation Solving
-
-MATLAB was used for all computations, visualizations, and verification of results.
-
----
-
-## Expected Output
-
-The program computes:
-
-* Numerical approximation of the integral mean-value point.
-* Numerical approximation of the derivative mean-value point.
-* Intermediate numerical approximations.
-* Graphical verification of the obtained solutions.
-* Error analysis (when applicable).
+* Interpolation
+* Root Finding
+* Mean Value Theorem
+* MATLAB
 
 ---
 
-## Educational Objectives
+## Author
 
-This project demonstrates how classical existence theorems from calculus can be verified computationally using numerical methods alone. It illustrates the interaction between root-finding, interpolation, differentiation, and integration techniques in a practical setting.
+Mahan Rahimi
 
----
+
+
+
+
+Numerical Analysis Final Project
+
+2026
