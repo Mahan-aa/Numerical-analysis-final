@@ -36,7 +36,7 @@ function y = mytan(x)
 end
 
 function y = integrand(x)
-    y = myexp(-1 * (x-1).^2);;
+    y = myexp(-1 * (x-1).^2);
 end
 
 
