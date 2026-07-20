@@ -14,7 +14,7 @@ function integral_val = F(x)
 end
 
 function y = myexp(x)
-    % using Taylor series expansion for exp(x) since 0 < x < tan(0.5) 
+    % using Taylor series expansion for exp(x) since 0 < x < tan(0.5) ( x is close to 0 )
     y = 0;
     for n = 0:50
         y = y + x.^n / factorial(n);
