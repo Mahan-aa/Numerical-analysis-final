@@ -1,13 +1,18 @@
 %% =====================================================
-%  All figures for the project are generated here.
-%  Each section below is self-contained and recomputes what it
-%  needs, so any section can be run on its own.
+%  All figures for the project are generated here and saved as PNGs
+%  in ../figures/. Each section below is self-contained and
+%  recomputes what it needs, so any section can be run on its own.
 %% =====================================================
 
-% Figures 2 and 3 below use the Symbolic Math Toolbox (MATLAB) /
+% Figures 3 and 5 below use the Symbolic Math Toolbox (MATLAB) /
 % symbolic package (Octave)
 if exist('OCTAVE_VERSION', 'builtin') ~= 0
     pkg load symbolic
+end
+
+figures_dir = '../figures';
+if ~exist(figures_dir, 'dir')
+    mkdir(figures_dir);
 end
 
 %% Figure 1 : custom F(x) vs. MATLAB's built-in integration
@@ -53,10 +58,35 @@ title('Combined Comparison');
 legend('Custom F(x)', 'Built-in', 'Location', 'best');
 hold off;
 
-% Save the entire 3-panel figure as a PNG image
-saveas(fig1, '../figures/comparison.png');
+saveas(fig1, fullfile(figures_dir, 'comparison.png'));
 
-%% Figure 2 : 4th derivatives used for the Simpson's rule error bound
+%% Figure 2 : error between custom F(x) and the built-in integration
+%  The two curves in Figure 1 overlap almost perfectly because the
+%  error is tiny compared to F(x) itself, so it is plotted on its
+%  own here with the y-axis zoomed to the error's actual range.
+
+error_vals = y_custom - y_native;
+
+fig2 = figure('Position', [50, 600, 700, 450]);
+plot(x_vals, error_vals, 'm-', 'LineWidth', 2);
+hold on;
+plot([x_vals(1), x_vals(end)], [0, 0], 'k--');
+hold off;
+grid on;
+xlabel('x');
+ylabel('F_{custom}(x) - F_{built-in}(x)');
+title('Error of custom F(x) vs. built-in integration');
+
+% Zoom the y-axis to the error's own range (with a little padding)
+err_range = max(error_vals) - min(error_vals);
+if err_range == 0
+    err_range = eps;
+end
+ylim([min(error_vals) - 0.1*err_range, max(error_vals) + 0.1*err_range]);
+
+saveas(fig2, fullfile(figures_dir, 'F_error.png'));
+
+%% Figure 3 : 4th derivatives used for the Simpson's rule error bound
 %  (see error_bounds.m for the numeric bound values)
 
 syms x t;
@@ -72,7 +102,7 @@ x_eb = linspace(0, 0.5, 1000);
 d4F_x = arrayfun(d4F_fn, x_eb);
 d4g_x = d4g_fn(x_eb);
 
-fig2 = figure('Position', [150, 400, 1400, 450]);
+fig3 = figure('Position', [150, 400, 1400, 450]);
 
 subplot(1, 2, 1);
 plot(x_eb, d4g_x, 'b-', 'LineWidth', 2);
@@ -88,7 +118,52 @@ xlabel('x');
 ylabel('d4F(x)');
 title('4th derivative of F(x)');
 
-%% Figure 3 : derivative Mean Value Theorem point
+saveas(fig3, fullfile(figures_dir, 'error_bounds.png'));
+
+%% Figure 4 : Integral Mean Value Theorem point
+%  Finds c in [0, 0.5] such that F(c) equals the average value of F
+%  on [0, 0.5], and plots F(x) together with that average value and
+%  the point (c, F(c)).
+
+n_int = 1000;   % intervals for Simpson's rule
+h_int = 0.5 / n_int;
+x_int = linspace(0, 0.5, n_int + 1);
+y_int = arrayfun(@F, x_int);
+
+integral_F = (h_int / 3) * (y_int(1) + 4*sum(y_int(2:2:end-1)) + 2*sum(y_int(3:2:end-2)) + y_int(end));
+avg_F = integral_F / 0.5;   % average value of F on [0, 0.5]
+
+% Bisection to find c such that F(c) = avg_F
+G_root = @(x) F(x) - avg_F;
+a = 0; b = 0.5; tol = 1e-8;
+while (b - a)/2 > tol
+    c_int = (a + b)/2;
+    if G_root(a)*G_root(c_int) < 0
+        b = c_int;
+    else
+        a = c_int;
+    end
+end
+c_int = (a + b)/2;
+
+x_F = linspace(0, 0.5, 500);
+y_F = arrayfun(@F, x_F);
+
+fig4 = figure('Position', [700, 600, 650, 500]);
+plot(x_F, y_F, 'b-', 'LineWidth', 2);
+hold on;
+plot([x_F(1), x_F(end)], [avg_F, avg_F], 'k--', 'LineWidth', 1.5);
+plot(c_int, F(c_int), 'yo', 'MarkerSize', 8, 'LineWidth', 2);
+hold off;
+grid on;
+xlabel('x');
+ylabel('F(x)');
+title('Integral Mean Value Theorem');
+legend('F(x)', 'average value', '(c, F(c))', 'Location', 'best');
+
+saveas(fig4, fullfile(figures_dir, 'integral_mvt.png'));
+
+%% Figure 5 : Derivative Mean Value Theorem point
 %  (F'(x) samples, interpolating polynomial p(x), and the point
 %  (c, p(c)) found in derivative_mvt.m)
 
@@ -133,7 +208,7 @@ c = (a + b)/2;
 t_d = linspace(0, 0.5, 1000);
 p_t = p(t_d);
 
-fig3 = figure('Position', [1000, 100, 650, 600]);
+fig5 = figure('Position', [1000, 100, 650, 600]);
 
 plot(x_d, zeros(1, n_pts), 'r|', 'LineWidth', 2);
 hold on;
@@ -145,5 +220,6 @@ plot(c, p(c), 'yo', 'MarkerSize', 8, 'LineWidth', 2);
 grid on;
 legend("x(i)", "F'(x(i))", "p(x)", "(c, p(c))");
 
-% Keep the comparison figure window open until closed
-waitfor(fig1);
+saveas(fig5, fullfile(figures_dir, 'derivative_mvt.png'));
+
+fprintf('Saved 5 figures to %s\n', figures_dir);
