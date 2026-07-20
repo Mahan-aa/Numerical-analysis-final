@@ -1,14 +1,21 @@
+%% =====================================================
+%  Integral Mean Value Theorem - root finding
+%  Finds c in [0, 0.5] such that F(c) equals the average value of
+%  F on [0, 0.5] (target value taken from integral_of_F.m: the
+%  integral of F over [0, 0.5], divided by the interval length).
+%
+%  Bisection is used first with symbolic (exact rational) arithmetic
+%  to narrow down the interval containing the root.
+%% =====================================================
+
 clc;
 clear all;
-close  all;
+close all;
 
-%First we use bisection method to get a smaller interval containing the root, for this porpuse
-% we use symbolic calculations to get exact rational results:
+n = 10;                              % number of bisection iterations - تعداد نقاطی که محاسبه می‌کنیم
+f = @(x) F(x) - 0.066647988010870;   % target = average value of F on [0, 0.5]
 
-n = 10; %number of terms we calculate
-f = @(x) F(x) - 0.066647988010870;
-
-%Initial inteval [a,b] and midpoint c, and the distance h the point c moves in the next step:
+% Initial interval [a, b], midpoint c, and step h that c moves by:
 a = sym(0);
 b = sym(0.5);
 c = sym(0.5/2);
@@ -18,6 +25,7 @@ fprintf("%-40s %-40s \n------------------------------------------------\n" , "In
 for i = (1:n)
     interval = sprintf("[%s , %s]" , string(a) , string(b));
     fprintf("%-40s %-40s \n" , interval, string(c));
+
     f_c = f(double(c));
     if (f_c > 0)
         b = c;
@@ -28,6 +36,6 @@ for i = (1:n)
     else
         fprintf("Root found: %s" , string(c));
     end
+
     h = h / 2;
 end
-
