@@ -11,6 +11,11 @@ clc;
 clear;
 close all;
 
+% Uses the Symbolic Math Toolbox (MATLAB) / symbolic package (Octave)
+if exist('OCTAVE_VERSION', 'builtin') ~= 0
+    pkg load symbolic
+end
+
 syms x t;
 g = exp(-(t-1)^2);
 F = int(g, t, 0, tan(x));

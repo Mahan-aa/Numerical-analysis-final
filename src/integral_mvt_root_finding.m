@@ -12,6 +12,11 @@ clc;
 clear all;
 close all;
 
+% Uses the Symbolic Math Toolbox (MATLAB) / symbolic package (Octave)
+if exist('OCTAVE_VERSION', 'builtin') ~= 0
+    pkg load symbolic
+end
+
 n = 10;                              % number of bisection iterations - تعداد نقاطی که محاسبه می‌کنیم
 f = @(x) F(x) - 0.066647988010870;   % target = average value of F on [0, 0.5]
 

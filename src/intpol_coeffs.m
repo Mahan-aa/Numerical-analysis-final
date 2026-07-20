@@ -4,6 +4,11 @@
 % interpolating polynomial, using Newton's forward-difference formula.
 
 function C = intpol_coeffs(x, y)
+    % Uses the Symbolic Math Toolbox (MATLAB) / symbolic package (Octave)
+    if exist('OCTAVE_VERSION', 'builtin') ~= 0
+        pkg load symbolic
+    end
+
     n = length(x);
     h = x(2) - x(1);
     A = zeros(n, n);   % table of finite differences

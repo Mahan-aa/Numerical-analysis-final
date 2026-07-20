@@ -4,6 +4,12 @@
 %  needs, so any section can be run on its own.
 %% =====================================================
 
+% Figures 2 and 3 below use the Symbolic Math Toolbox (MATLAB) /
+% symbolic package (Octave)
+if exist('OCTAVE_VERSION', 'builtin') ~= 0
+    pkg load symbolic
+end
+
 %% Figure 1 : custom F(x) vs. MATLAB's built-in integration
 %  (comparison of F.m's Simpson's rule + Taylor series approximation
 %  against MATLAB's `integral`)

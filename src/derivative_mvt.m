@@ -14,6 +14,11 @@ clc
 clear
 close all
 
+% Uses the Symbolic Math Toolbox (MATLAB) / symbolic package (Octave)
+if exist('OCTAVE_VERSION', 'builtin') ~= 0
+    pkg load symbolic
+end
+
 %% =====================================================
 %  Part 1 : Sample F'(x) at n points
 %  (numerically, using the centered three-point method)
