@@ -102,6 +102,23 @@ H(x)=F'(x)-m
 
 ---
 
+## Dependencies
+
+* **MATLAB** (R2016b or later, for local functions in script files)
+  * **Symbolic Math Toolbox** — required for `syms`/`sym`, `int`, `diff`, `matlabFunction`, `vpa`, and `coeffs`, used in `derivative_mvt.m`, `error_bounds.m`, `integral_mvt_root_finding.m`, `intpol_coeffs.m`, and `ploting.m`
+  * **Optimization Toolbox** — required for `fminbnd`, used in `error_bounds.m`
+
+Running with **GNU Octave** instead of MATLAB also works, but requires the `symbolic` package:
+
+```
+pkg install -forge symbolic
+pkg load symbolic
+```
+
+No other third-party packages or toolboxes are used.
+
+---
+
 ## Author
 
 Mahan Rahimi
