@@ -6,6 +6,14 @@
 %
 %  Bisection is used first with symbolic (exact rational) arithmetic
 %  to narrow down the interval containing the root.
+%
+%  قضیه مقدار میانگین انتگرالی - یافتن ریشه
+%  یافتن c در [0, 0.5] به‌طوری‌که F(c) برابر با مقدار میانگین F روی
+%  [0, 0.5] باشد (مقدار هدف از integral_of_F.m گرفته شده: انتگرال F
+%  روی [0, 0.5] تقسیم بر طول بازه).
+%
+%  ابتدا از روش دوبخشی با محاسبات نمادین (کسری دقیق) برای محدود کردن
+%  بازه‌ی حاوی ریشه استفاده می‌شود.
 %% =====================================================
 
 clc;
@@ -13,14 +21,16 @@ clear all;
 close all;
 
 % Uses the Symbolic Math Toolbox (MATLAB) / symbolic package (Octave)
+% از جعبه‌ابزار Symbolic Math (متلب) / بسته symbolic (اکتاو) استفاده می‌کند
 if exist('OCTAVE_VERSION', 'builtin') ~= 0
     pkg load symbolic
 end
 
 n = 10;                              % number of bisection iterations - تعداد نقاطی که محاسبه می‌کنیم
-f = @(x) F(x) - 0.066647988010870;   % target = average value of F on [0, 0.5]
+f = @(x) F(x) - 0.066647988010870;   % target = average value of F on [0, 0.5] - هدف = مقدار میانگین F روی [0, 0.5]
 
 % Initial interval [a, b], midpoint c, and step h that c moves by:
+% بازه اولیه [a, b]، نقطه میانی c، و گام h که c با آن جابه‌جا می‌شود:
 a = sym(0);
 b = sym(0.5);
 c = sym(0.5/2);

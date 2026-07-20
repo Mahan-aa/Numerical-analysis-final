@@ -8,6 +8,16 @@
 %  for Derivatives:  F'(c) = (F(b) - F(a)) / (b - a)
 %
 %  Figures for this script are generated separately in ploting.m
+%
+%  پروژه تحلیل عددی
+%  تابع:
+%  F(x) = ∫[0,tan(x)] exp(-(t-1)^2) dt
+%  بازه: [0, 0.5]
+%
+%  هدف: یافتن c در (0, 0.5) که در قضیه مقدار میانگین برای مشتق صدق کند:
+%  F'(c) = (F(b) - F(a)) / (b - a)
+%
+%  نمودارهای این اسکریپت جداگانه در ploting.m تولید می‌شوند
 %% =====================================================
 
 clc
@@ -15,6 +25,7 @@ clear
 close all
 
 % Uses the Symbolic Math Toolbox (MATLAB) / symbolic package (Octave)
+% از جعبه‌ابزار Symbolic Math (متلب) / بسته symbolic (اکتاو) استفاده می‌کند
 if exist('OCTAVE_VERSION', 'builtin') ~= 0
     pkg load symbolic
 end
@@ -43,6 +54,7 @@ disp([x' dF'])
 %  درون‌یابی چند جمله‌ای
 
 % Method 1: MATLAB's built-in fit
+% روش ۱: برازش داخلی متلب
 % p = polyfit(x, dF, n - 1);
 % disp('Interpolating polynomial coefficients:')
 % disp(p)
@@ -82,6 +94,7 @@ disp(m)
 %  یافتن ریشه
 
 % Method 1: MATLAB's built-in root finder
+% روش ۱: ریشه‌یاب داخلی متلب
 % g = @(z) polyval(p, z) - m;
 % c = fzero(g, [0 0.5]);
 % disp('c = ')

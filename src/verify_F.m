@@ -1,6 +1,9 @@
 %% =====================================================
 %  Sanity check: compares the custom F(x) (Simpson's rule + Taylor
 %  series, see F.m) against MATLAB's built-in numerical integration.
+%
+%  بررسی صحت: مقایسه F(x) دست‌ساز (قاعده سیمپسون + سری تیلور،
+%  به F.m مراجعه شود) با انتگرال‌گیری عددی داخلی متلب.
 %% =====================================================
 
 integrand = @(x) exp(-(x - 1).^2);
