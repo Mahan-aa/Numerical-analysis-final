@@ -131,11 +131,13 @@ No other third-party packages or toolboxes are used.
 
 ---
 
-## Author
+## Authors
 
 Mahan Rahimi
-
-
+Shima Khalilpuor
+Matin Abasi 
+Zahra Taheri
+Masoome Mortazavi
 
 
 
