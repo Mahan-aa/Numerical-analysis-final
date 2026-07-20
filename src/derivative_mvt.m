@@ -1,121 +1,105 @@
-﻿%% =====================================================
-%  پروژه آنالیز عددی
-%  تابع:
-%  F(x)=1+∫[0,tan(x)] exp(-(t-1)^2) dt
-%  بازه : [0 , 0.5]
+%% =====================================================
+%  Numerical Analysis Project
+%  Function:
+%  F(x) = ∫[0,tan(x)] exp(-(t-1)^2) dt
+%  Interval: [0, 0.5]
+%
+%  Goal: find c in (0, 0.5) satisfying the Mean Value Theorem
+%  for Derivatives:  F'(c) = (F(b) - F(a)) / (b - a)
+%
+%  Figures for this script are generated separately in ploting.m
 %% =====================================================
 
 clc
 clear
 close all
 
-
 %% =====================================================
-%  Part 1 : تولید نقاطی برای محاسبه ی مقادیری از مشتق تابع(به صورت عددی، روش سه نقطه ای مرکزی)
+%  Part 1 : Sample F'(x) at n points
+%  (numerically, using the centered three-point method)
+%  تولید نقاطی برای محاسبه مقادیر مشتق تابع (روش سه‌نقطه‌ای مرکزی)
 
-n = 20;     %تعداد نقاط
+n = 20;                        % number of sample points - تعداد نقاط
 x = linspace(0, 0.5, n);
-h = (x(2) - x(1)) / 1000;     %فاصله مورد استفاده در روش سه نقطه ای
-
+h = (x(2) - x(1)) / 1000;      % step size used in the three-point method - فاصله مورد استفاده در روش سه‌نقطه‌ای
 
 dF = zeros(1, n);
 
 for i = 1:n
-
     dF(i) = (F(x(i) + h) - F(x(i) - h)) / (2*h);
-
 end
 
-disp('جدول مقادیر مشتق تابع:')
+disp('Table of F''(x) values:')  % جدول مقادیر مشتق تابع
 fprintf("   %-19s %-19s \n" , "x" , "F'(x)")
 disp([x' dF'])
 
 %% =====================================================
-%  Part 2 : درون یابی چند جمله ای
+%  Part 2 : Polynomial interpolation of the derivative samples
+%  درون‌یابی چند جمله‌ای
 
-% روش اول: استفاده از تابع خود متلب
-% p = polyfit(x,dF,n - 1);
-% disp('ضرایب چندجمله‌ای درون‌یابی:')
+% Method 1: MATLAB's built-in fit
+% p = polyfit(x, dF, n - 1);
+% disp('Interpolating polynomial coefficients:')
 % disp(p)
 %%====================================
-% روش دوم: ساخت تابع چندجمله‌ای درون‌یاب لاگرانژ
+% Method 2: build the Lagrange interpolating polynomial by hand
+% ساخت تابع چندجمله‌ای درون‌یاب لاگرانژ
 
 syms X
 p = 0;
 
 for i = 1:n
-
     L = 1;
 
     for j = 1:n
-
         if j ~= i
             L = L * (X - x(j)) / (x(i) - x(j));
         end
-
     end
 
     p = p + dF(i) * L;
-
 end
 
 p = expand(p);
 p = matlabFunction(p);
 
 %% =====================================================
-%  Part 4 : شیب متوسط تابع
+%  Part 3 : Secant (average) slope of F on [a, b]
+%  شیب متوسط تابع  ( m = (F(b) - F(a)) / (b - a), and F(0) = 0 )
 
 m = F(0.5) / 0.5;
 
-disp('شیب = ')
+disp('Average slope m = ')
 disp(m)
 
 %% =====================================================
-%  Part 5 : یافتن ریشه
+%  Part 4 : Find c such that p(c) = m  (i.e. F'(c) = m)
+%  یافتن ریشه
 
-% روش اول: استفاده از توابع آماده ی متلب
-%g = @(z) polyval(p,z) - m;
-%c = fzero(g,[0 0.5]);
-%disp('مقدار c = ')
-%disp(c)
+% Method 1: MATLAB's built-in root finder
+% g = @(z) polyval(p, z) - m;
+% c = fzero(g, [0 0.5]);
+% disp('c = ')
+% disp(c)
 %%===============================
-% روش دوم: یافتن ریشه با روش دوبخشی
+% Method 2: bisection method
+% یافتن ریشه با روش دوبخشی
 
 g = @(x) p(x) - m;
 a = 0;
 b = 0.5;
 tol = 1e-8;
 
-while (b-a)/2 > tol
-
-    c = (a+b)/2;
+while (b - a)/2 > tol
+    c = (a + b)/2;
 
     if g(a)*g(c) < 0
         b = c;
     else
         a = c;
     end
-
 end
 
-c = (a+b)/2;
+c = (a + b)/2;
 disp('c = ')
 disp(c)
-
-%% =====================================================
-%  Part 6 : نمودار نهایی
-
-t = linspace(0,0.5,1000);
-p_t = p(t);
-
-figure('Position', [1000, 100, 650, 600])
-
-plot(x, zeros(1,n) , 'r|', 'LineWidth', 2);
-hold on;
-plot(x , dF, 'r.' , 'MarkerSize', 20);
-hold on;
-plot(t , p_t, 'g', 'LineWidth', 2);
-hold on;
-plot(c, p(c), 'yo', 'MarkerSize', 8, 'LineWidth', 2);
-grid on;
-legend("x(i)", "F'(x(i))", "p(x)", "(c, p(c))")
