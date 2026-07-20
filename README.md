@@ -102,6 +102,18 @@ H(x)=F'(x)-m
 
 ---
 
+## Figures
+
+Running `src/ploting.m` generates and saves the following PNGs to `figures/`:
+
+* `comparison.png` — custom F(x) vs. MATLAB's built-in integration
+* `F_error.png` — error between custom F(x) and the built-in integration, y-axis zoomed to the error's own range
+* `error_bounds.png` — 4th derivatives of the integrand and of F(x), used for the Simpson's rule error bound
+* `integral_mvt.png` — F(x), its average value, and the Integral Mean Value Theorem point (c, F(c))
+* `derivative_mvt.png` — F'(x) samples, the interpolating polynomial, and the Derivative Mean Value Theorem point (c, p(c))
+
+---
+
 ## Dependencies
 
 * **MATLAB** (R2016b or later, for local functions in script files)
