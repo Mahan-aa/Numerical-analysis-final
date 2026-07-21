@@ -12,6 +12,7 @@ function integral_val = F(x)
     % Apply Simpson's 1/3 rule weights: 1, 4, 2, 4, ..., 2, 4, 1
     % اعمال ضرایب قاعده ۱/۳ سیمپسون: ۱، ۴، ۲، ۴، ...، ۲، ۴، ۱
     integral_val = (h / 3) * (y(1) + 4*sum(y(2:2:end-1)) + 2*sum(y(3:2:end-2)) + y(end));
+    integral_val = integral_val + 1; 
 
 end
 
