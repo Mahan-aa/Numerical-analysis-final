@@ -248,9 +248,9 @@ plot(x_d, zeros(1, n_pts), 'r|', 'LineWidth', 2);
 hold on;
 plot(x_d, dF, 'r.', 'MarkerSize', 20);
 hold on;
-plot(t_d, p_t, 'g', 'LineWidth', 2);
+plot(t_d, p_t, 'b', 'LineWidth', 2);
 hold on;
-plot(c, p(c), 'yo', 'MarkerSize', 8, 'LineWidth', 2);
+plot(c, p(c), 'go', 'MarkerSize', 8, 'LineWidth', 2);
 grid on;
 legend("x(i)", "F'(x(i))", "p(x)", "(c, p(c))");
 
