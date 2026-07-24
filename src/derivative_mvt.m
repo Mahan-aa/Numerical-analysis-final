@@ -23,6 +23,7 @@
 clc
 clear
 close all
+format long
 
 % Uses the Symbolic Math Toolbox (MATLAB) / symbolic package (Octave)
 % از جعبه‌ابزار Symbolic Math (متلب) / بسته symbolic (اکتاو) استفاده می‌کند
@@ -106,7 +107,7 @@ disp(m)
 g = @(x) p(x) - m;
 a = 0;
 b = 0.5;
-tol = 1e-8;
+tol = 5e-9;
 
 while (b - a)/2 > tol
     c = (a + b)/2;
