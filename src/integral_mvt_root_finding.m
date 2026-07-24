@@ -29,10 +29,9 @@ end
 
 %=========================================================
 %Bisection method:
-%روش دوبخشی:
 
 n = 5;                                     % number of bisection iterations - تعداد نقاطی که محاسبه می‌کنیم
-f = @(x) F(x) - 0.066647988010870 / 0.5;   % target = average value of F on [0, 0.5] - هدف = مقدار میانگین F روی [0, 0.5]
+f = @(x) F(x) - 0.566647988010870 / 0.5;   % target = average value of F on [0, 0.5] - هدف = مقدار میانگین F روی [0, 0.5]
 
 % Initial interval [a, b], midpoint c, and step h that c moves by:
 % بازه اولیه [a, b]، نقطه میانی c، و گام h که c با آن جابه‌جا می‌شود:
@@ -66,21 +65,19 @@ end
 
 %=========================================================
 %Fixed point method:
-%روش نقطه ثابت:
 
 %First we calculate F'(c) using centered 3 point method:
-%ابتدا مشتق F در نقطه c را با استفاده از روش سه‌نقطه‌ای مرکزی محاسبه می‌کنیم:
 
 c = double(c);
 h = 0.5 / 1000;
-dF_c = (F(c + h) - F(c - h)) / (2*h);
+dF_c = (F(c + h) - F(c - h)) / (2*h)
+1/dF_c
 
 
 %Then use this to define a function g for the fixed point algorithm, and use the starting point c:
-%سپس از آن برای تعریف تابع g در الگوریتم نقطه ثابت استفاده می‌کنیم و نقطه شروع c را به کار می‌بریم:
 
 g = @(x) x - f(x) / dF_c;
-n = 6;                     %number of steps used for fixed-point algorithm - تعداد گام‌های استفاده‌شده در الگوریتم نقطه ثابت
+n = 6;                     %number of steps used for fixed-point algorithm
 
 fprintf("\nFixed-Point Method: \n\n");
 fprintf("   %-8s %-20s \n   --------------------------\n", "Step", "Point");
